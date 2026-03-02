@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Vene Glownails - Abril Tevez</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="drawn-bg-layer layer-1"></div>
+    <div class="drawn-bg-layer layer-2"></div>
+
+    <div class="app-container">
+        <header>
+            <div class="title-block">
+                <h1>Vene Glownails</h1>
+                <p class="subtitle-by">by: Abril Tevez</p>
+            </div>
+            
+            <div class="progress-dots" id="progress-dots">
+                <div class="dot active"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </header>
+
+        <main class="slider-container">
+            <div class="slider" id="slider">
+                
+                <section class="step" id="step-0">
+                    <h2>1. Técnica</h2>
+                    <p class="subtitle">Elige tu base (Solo una)</p>
+                    <div class="options-grid" id="container-tecnica"></div>
+                    
+                    <div class="swipe-hint">
+                        <span>👈 Desliza para continuar 👉</span>
+                    </div>
+                </section>
+
+                <section class="step" id="step-1">
+                    <h2>2. Decoraciones</h2>
+                    <p class="subtitle">Por uña</p>
+                    <div class="list-container" id="container-decoraciones"></div>
+                </section>
+
+                <section class="step" id="step-2">
+                    <h2>3. Extras</h2>
+                    <div class="list-container" id="container-extras"></div>
+                    
+                    <div class="item-row switch-row">
+                        <span id="label-forma">🔄 Cambio de Forma</span>
+                        <label class="switch">
+                            <input type="checkbox" id="switch-forma" onchange="calculateTotal()">
+                            <span class="slider-round"></span>
+                        </label>
+                    </div>
+                </section>
+
+                <section class="step" id="step-3">
+                    <h2>4. Retiro</h2>
+                    <p class="subtitle">Por uña</p>
+                    <div class="list-container" id="container-retiro"></div>
+                </section>
+
+                <section class="step" id="step-4">
+                    <h2>5. Reposiciones</h2>
+                    <p class="subtitle">Por uña rota</p>
+                    <div class="list-container" id="container-reposiciones"></div>
+                    
+                    <div class="final-message">
+                        <p>✨ <strong>¡Todo listo!</strong> Si ya terminaste de armar tu diseño, podés enviarme tu presupuesto por WhatsApp presionando el botón verde de abajo. 👇</p>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+
+        <footer>
+            <div class="total-box">
+                <span>Total Estimado</span>
+                <span class="price">$<span id="total-price">0</span></span>
+            </div>
+            <div class="footer-buttons">
+                <button class="btn-share" onclick="compartirWhatsApp()">📲 Enviar presupuesto por WhatsApp</button>
+                <button class="btn-reset" onclick="resetCalculator()">Reiniciar Cálculo 🔄</button>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
