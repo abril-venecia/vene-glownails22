@@ -51,9 +51,9 @@
                     <div class="list-container" id="container-extras"></div>
                     
                     <div class="item-row switch-row">
-                        <span id="label-forma">🔄 Cambio de Forma</span>
+                        <span id="label-forma" class="item-info">🔄 Cambio de Forma</span>
                         <label class="switch">
-                            <input type="checkbox" id="switch-forma" onchange="calculateTotal()">
+                            <input type="checkbox" id="switch-forma" onchange="playPop(); calculateTotal()">
                             <span class="slider-round"></span>
                         </label>
                     </div>
@@ -84,8 +84,8 @@
                 <span class="price">$<span id="total-price">0</span></span>
             </div>
             <div class="footer-buttons">
-                <button class="btn-share" onclick="compartirWhatsApp()">📲 Enviar presupuesto por WhatsApp</button>
-                <button class="btn-reset" onclick="resetCalculator()">Reiniciar Cálculo 🔄</button>
+                <button class="btn-share" onclick="playPop(); compartirWhatsApp()">📲 Enviar presupuesto por WhatsApp</button>
+                <button class="btn-reset" onclick="playPop(); resetCalculator()">Reiniciar Cálculo 🔄</button>
             </div>
         </footer>
     </div>

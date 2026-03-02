@@ -1,20 +1,55 @@
+// --- SISTEMA DE SONIDOS (Web Audio API) ---
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+function playPop() {
+    if(audioCtx.state === 'suspended') audioCtx.resume();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(450, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 0.1);
+    
+    gain.gain.setValueAtTime(0.7, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+    
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.1);
+}
+
+// --- PRECIOS ---
 const precios = {
   "tecnica": {
-    "💅 Softgel Largo 1": 3000, "✨ Softgel Largo 2": 3500,
-    "💧 Gel Semipermanente": 2000, "🛡️ Capping Gel": 2500
+    "💅 Esmaltado Semi": 10000,
+    "🛡️ Kapping": 13000,
+    "💎 Kapping Polygel": 15000,
+    "✨ Kapping Gel": 15000,
+    "🌸 Soft Gel": 15000,
+    "💖 Esculpidas Polygel": 20000,
+    "👑 Esculpidas con Gel": 23000
   },
   "decoraciones": {
-    "🪞 Espejo": 200, "🌌 Aurora": 200, "🦪 Perla": 150, "🤎 Corey": 150,
-    "🌸 Blooming": 200, "🐈 Ojo de Gato": 250, "🏔️ Relieve": 300, "🧊 3D": 400,
-    "🤍 Francés": 200, "🎨 Nail Art Simple": 150, "🖼️ Nail Art Avanzado": 400,
-    "💎 Diseño con Strass": 300, "✨ Cristal CH": 500,
-    "🌟 Cristal M": 700, "👑 Cristal G": 1000
+    "🌟 Blooming": 500,
+    "🐈 Ojo de Gato": 250,
+    "🤍 Francesita": 200,
+    "✨ Strass": 500,
+    "🏔️ Relieve": 600,
+    "🧊 Perlado": 500
   },
   "extras": {
-    "🌈 Tonos Extra": 100, "🔄 Cambio de Forma": 500
+    "🌈 Tonos Extra": 100,
+    "🔄 Cambio de Forma": 500
   },
-  "retiro": { "🧴 Softgel": 150, "🧽 Rubber/Semi": 100 },
-  "reposiciones": { "🩹 Softgel": 350, "🩹 Gel Semi": 250 }
+  "retiro": {
+    "🧴 Softgel": 150,
+    "🧽 Rubber/Semi": 100
+  },
+  "reposiciones": {
+    "🩹 Softgel": 350,
+    "🩹 Gel Semi": 250
+  }
 };
 
 let state = {
@@ -26,6 +61,11 @@ let currentStep = 0;
 window.onload = () => {
     initApp();
     setupTouchSwipe();
+    
+    // Habilitar el audio context al primer toque (política de navegadores)
+    document.body.addEventListener('touchstart', () => {
+        if(audioCtx.state === 'suspended') audioCtx.resume();
+    }, { once: true });
 };
 
 function initApp() {
@@ -36,10 +76,8 @@ function initApp() {
     renderCounters(precios.reposiciones, 'reposiciones', 'container-reposiciones');
     
     document.getElementById('label-forma').innerHTML = `
-        <div class="item-info">
-            <span>🔄 Cambio de Forma</span>
-            <span class="price-tag">($${precios.extras["🔄 Cambio de Forma"]})</span>
-        </div>
+        <span>🔄 Cambio de Forma</span>
+        <span class="price-tag">($${precios.extras["🔄 Cambio de Forma"]})</span>
     `;
     calculateTotal();
     updateDots();
@@ -52,7 +90,10 @@ function renderTecnicas() {
         const btn = document.createElement('button');
         btn.className = 'tech-btn';
         btn.innerHTML = `<span>${key}</span><span class="price-tag">$${precios.tecnica[key]}</span>`;
-        btn.onclick = () => selectTecnica(key, btn);
+        btn.onclick = () => {
+            playPop();
+            selectTecnica(key, btn);
+        };
         container.appendChild(btn);
     }
 }
@@ -90,6 +131,7 @@ function renderCounters(objData, category, containerId) {
 }
 
 function updateCount(btnElement, category, key, change) {
+    playPop();
     // Animación del botón
     btnElement.classList.remove('pop-anim');
     void btnElement.offsetWidth; // Forzar reflow para reiniciar la animación
@@ -235,7 +277,6 @@ function compartirWhatsApp() {
     mensaje += "-----------------------------------\n\n";
     mensaje += `_¡Te espero para dejarte las uñas hermosas!_ 💖`;
 
-    // Número de teléfono configurado
     const numeroTelefono = "5491141443946";
     const url = `https://wa.me/${numeroTelefono}?text=${encodeURIComponent(mensaje)}`;
     
